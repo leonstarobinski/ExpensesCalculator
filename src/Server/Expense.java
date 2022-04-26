@@ -2,7 +2,7 @@ package Server;
 
 import java.util.Date;
 
-public class Expense {
+public class Expense implements Transaction{
     private double amount;
     private Date date;
     private String description;
