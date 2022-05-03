@@ -15,11 +15,15 @@ public class GUI extends JFrame {
        setFont(Font.getFont(Font.SANS_SERIF));
        setVisible(true);
        c = this.getContentPane();
-       c.setLayout(new FlowLayout());
+       c.setLayout(new BorderLayout());
        c.add(new JLabel("Expense Calculator"));
        JButton expense = new JButton("Add Expense");
        JButton deposit = new JButton("Add Deposit");
-
+       JPanel panel = new JPanel();
+       panel.setLayout(new FlowLayout());
+       panel.add(expense);
+       panel.add(deposit);
+       c.add(panel, BorderLayout.SOUTH);
        JTextArea amount = new JTextArea("Hier schreiben Sie das Amount");
        JTextField description = new JTextField();
        JTextField date = new JTextField();
@@ -49,8 +53,6 @@ public class GUI extends JFrame {
 
            }
        });
-       c.add(expense);
-       c.add(deposit);
        setVisible(true);
 
 
