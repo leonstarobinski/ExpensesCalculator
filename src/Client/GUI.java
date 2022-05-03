@@ -37,7 +37,7 @@ public class GUI extends JFrame {
        JTextArea description = new JTextArea("Place holder");
        JTextField date = new JTextField();
 
-       SimpleDateFormat model = new SimpleDateFormat("dd.MM.yyyy");
+       SimpleDateFormat model = new SimpleDateFormat("dd/MM/yyyy");
        JSpinner spinner = new JSpinner(new SpinnerDateModel());
        spinner.setEditor(new JSpinner.DateEditor(spinner, model.toPattern()));
 
@@ -90,7 +90,9 @@ public class GUI extends JFrame {
 
 
 
-                   System.out.println(dateInput[0]);
+
+                   dateInput[0] = new Date(model.format(spinner.getValue()));
+                   System.out.println(dateInput[0] instanceof java.util.Date);
 
 
 
