@@ -1,5 +1,6 @@
 package Client;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -20,8 +21,8 @@ public class Data {
     public static String[] toStringArray(){
         String str[] = new String[arrayList.size()];
         for(int i =0; i<str.length; i++){
-            str[i] =""+ arrayList.get(i).date+"  "+arrayList.get(i).description+"  "+arrayList.get(i).amount;
-            System.out.println( arrayList.get(i).date.toString()+"\t"+arrayList.get(i).description+"\t"+arrayList.get(i).amount);
+            SimpleDateFormat model = new SimpleDateFormat("dd/MM/yyyy");
+            str[i] =""+ model.format(arrayList.get(i).date)+"  "+arrayList.get(i).description+"  "+arrayList.get(i).amount;
         }
         return str;
     }
