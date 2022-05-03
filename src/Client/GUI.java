@@ -25,13 +25,13 @@ public class GUI extends JFrame {
        panel.add(deposit);
        c.add(panel, BorderLayout.SOUTH);
        JTextArea amount = new JTextArea("Hier schreiben Sie das Amount");
-       JTextField description = new JTextField();
+       JTextField description = new JTextField("Expense Calculator");
        JTextField date = new JTextField();
-       amount.setVisible(true);
-       description.setVisible(false);
+
+       description.setVisible(true);
        date.setVisible(false);
-       c.add(amount);
-       c.add(description);
+       c.add(amount, BorderLayout.NORTH);
+       c.add(description, BorderLayout.CENTER);
        c.add(date);
 
        expense.addActionListener(new ActionListener() {
