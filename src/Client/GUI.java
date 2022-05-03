@@ -5,16 +5,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
 
 public class GUI extends JFrame {
    private Container c;
-
+    final private double[] amountInput = new double[1];
+    final private String[] descriptionInput = new String[1];
+    final private Date[] dateInput = new Date[1];
+    private boolean isDeposit = false;
    public GUI(Client client){
 
-       final  double[] amountInput = new double[1];
-       final  String[] descriptionInput = new String[1];
-       final Date[] dateInput = new Date[1];
+
 
        setSize(800,600);
        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,17 +58,21 @@ public class GUI extends JFrame {
        panel2.add(amount);
        panel2.add(description);
        c.add(date);
-
+       String[] temp = {"Hello"};
+       JList[] list = {new JList(temp)};
+        list[0].setVisible(true);
+        c.add(list[0], BorderLayout.CENTER);
 
        expense.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-             expense.setVisible(false);
-             deposit.setVisible(false);
+               expense.setVisible(false);
+               deposit.setVisible(false);
                amount.setVisible(true);
                description.setVisible(true);
                saveButton.setVisible(true);
                spinner.setVisible(true);
+               isDeposit = false;
            }
        });
 
@@ -78,25 +83,26 @@ public class GUI extends JFrame {
                expense.setVisible(false);
                deposit.setVisible(false);
                amount.setVisible(true);
-
+               description.setVisible(true);
+               saveButton.setVisible(true);
+               spinner.setVisible(true);
+               isDeposit = true;
            }
        });
        saveButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-
-                   amountInput[0] = Double.parseDouble(amount.getText());
-                   descriptionInput[0] = description.getText();
-
-
-
-
-                   dateInput[0] = new Date(model.format(spinner.getValue()));
-                   System.out.println(dateInput[0] instanceof java.util.Date);
-
-
-
-
+               amountInput[0] = Double.parseDouble(amount.getText());
+               descriptionInput[0] = description.getText();
+               dateInput[0] = new Date(model.format(spinner.getValue()));
+               Data data = new Data(amountInput[0], descriptionInput[0], dateInput[0], isDeposit);
+               String[] temp = new String[1];
+               String[] test = {"test"};
+               JList temp2 = new JList(Data.toStringArray());
+               list[0].setVisible(false);
+               temp2.setVisible(true);
+               c.add(temp2, BorderLayout.CENTER);
+               System.out.println("test");
            }
        });
        setVisible(true);
@@ -104,10 +110,7 @@ public class GUI extends JFrame {
 
 
    }
-    private void format(String str){
-       String temp = "";
-       
-    }
+
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(new Runnable() {
