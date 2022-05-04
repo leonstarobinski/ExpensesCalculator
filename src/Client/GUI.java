@@ -52,7 +52,7 @@ public class GUI extends JFrame {
        scrollPane = new JScrollPane(list[0]);
        scrollPane.setLayout(new ScrollPaneLayout());
        list[0].setLayout(new FlowLayout());
-       c.add(list[0], BorderLayout.CENTER);
+       c.add(list[0], BorderLayout.EAST);
         JButton connectButton = new JButton("Connect");
         panel.add(connectButton);
        backButton.setVisible(false);
@@ -71,6 +71,8 @@ public class GUI extends JFrame {
        c.add(date);
        expense.setVisible(false);
        deposit.setVisible(false);
+       final JLabel[] j = {new JLabel(Data.getPercentage())};
+       c.add(j[0], BorderLayout.CENTER);
        connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -137,8 +139,12 @@ public class GUI extends JFrame {
 
                //list[0].setVisible(true);
                list[0].validate();
-               c.add(list[0], BorderLayout.CENTER);
+               c.add(list[0], BorderLayout.EAST);
                validate();
+               c.remove(j[0]);
+               j[0] = new JLabel(Data.getPercentage());
+               c.add(j[0],BorderLayout.CENTER);
+
            }
 
        }

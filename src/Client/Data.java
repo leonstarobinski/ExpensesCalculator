@@ -1,5 +1,6 @@
 package Client;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,12 +56,14 @@ public class Data {
                 counter+=d.amount;
             }
         }
-        String str = "";
+
+        String str = "Balance: "+balance+ "\nYour expenses are "+ counter + " Euros\n";
         for (Data d:arrayList
              ) {
             if(!d.isDeposit){
                 boolean temp = false;
-                for(int i=0; i< arrayList.size(); i++){
+
+                for(int i=0; i< percentageList.size(); i++){
                     if(d.description.equals(percentageList.get(i))){
                         temp = true;
                     }
@@ -70,12 +73,25 @@ public class Data {
                 }
             }
         }
+        DecimalFormat df = new DecimalFormat("#.##");
         for(int i=0; i< percentageList.size(); i++){
             str +=  percentageList.get(i)+ ": ";
-            for(int j=0; j< arrayList.size(); i++){
-
+            double temp =0;
+            for(int j=0; j< arrayList.size(); j++){
+                if((percentageList.get(i).equals(arrayList.get(j).description))&&!(arrayList.get(j).isDeposit)){
+                    temp+=arrayList.get(j).amount;
+                }
             }
+            str+= "is "+ df.format((temp/counter)*100)+"% of your expenses."+"\n";
         }
+        return str;
     }
 
+    public static void main(String[] args) {
+        new Data(100, "Tom", new Date(), false);
+        new Data(50, "D", new Date(), true);
+        new Data(600, "D", new Date(), true);
+        new Data(200, "Michelle", new Date(), false);
+        System.out.println(getPercentage());
+    }
 }
