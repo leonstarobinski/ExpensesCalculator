@@ -132,7 +132,9 @@ public class GUI extends JFrame {
                SimpleDateFormat model = new SimpleDateFormat("MM/dd/yyyy");
                dateInput[0] = new Date(model.format(spinner.getValue()));
                Data data = new Data(amountInput[0], descriptionInput[0], dateInput[0], isDeposit);
+
                list[0] = new JList(Data.toStringArray());
+
                //list[0].setVisible(true);
                list[0].validate();
                c.add(list[0], BorderLayout.CENTER);
@@ -159,6 +161,7 @@ public class GUI extends JFrame {
 
 
    }
+
 
     public static void main(String[] args) {
 
