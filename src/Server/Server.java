@@ -9,6 +9,7 @@ public class Server {
         ServerSocket socket = new ServerSocket(8080);
         while(true) {
             new Thread(new ClientHandler(socket.accept())).start();
+            System.out.println("Connected");
         }
 
     }

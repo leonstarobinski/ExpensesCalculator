@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,6 +28,7 @@ public class GUI extends JFrame {
        c.add(new JLabel("Expense Calculator"));
        JButton expense = new JButton("Add Expense");
        JButton deposit = new JButton("Add Deposit");
+
        JButton saveButton = new JButton("Save");
        JButton backButton = new JButton("Back");
 
@@ -48,17 +50,17 @@ public class GUI extends JFrame {
        JList[] list = {new JList(Data.toStringArray())};
        list[0].setVisible(true);
        scrollPane = new JScrollPane(list[0]);
-       c.add(scrollPane, BorderLayout.CENTER);
-
+       scrollPane.setLayout(new ScrollPaneLayout());
+       list[0].setLayout(new FlowLayout());
+       c.add(list[0], BorderLayout.CENTER);
+        JButton connectButton = new JButton("Connect");
+        panel.add(connectButton);
        backButton.setVisible(false);
        saveButton.setVisible(false);
        amount.setVisible(false);
        description.setVisible(false);
        date.setVisible(false);
-       JLabel label = new JLabel("Welcome!");
        JPanel panel2 = new JPanel();
-       panel2.setSize(500, 100);
-       panel2.add(label);
        panel2.add(spinner);
        spinner.setVisible(false);
        panel2.setLayout(new FlowLayout());
@@ -67,7 +69,29 @@ public class GUI extends JFrame {
        panel2.add(amount);
        panel2.add(description);
        c.add(date);
+       expense.setVisible(false);
+       deposit.setVisible(false);
+       connectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SwingWorker() {
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        try {
+                            client.connect();
 
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        return null;
+                    }
+                }.execute();
+
+                connectButton.setVisible(false);
+                expense.setVisible(true);
+                deposit.setVisible(true);
+            }
+        });
 
        expense.addActionListener(new ActionListener() {
            @Override

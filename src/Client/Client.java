@@ -1,7 +1,6 @@
 package Client;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class Client {
@@ -12,4 +11,9 @@ public class Client {
     private static Socket client;
 
 
+    public void connect() throws IOException {
+        client = new Socket(IP,Port);
+        out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+        in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+    }
 }
