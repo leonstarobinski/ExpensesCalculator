@@ -24,7 +24,7 @@ public class GUI extends JFrame {
        setFont(Font.getFont(Font.SANS_SERIF));
        setVisible(true);
        c = this.getContentPane();
-       c.setLayout(new BorderLayout());
+       c.setLayout(new FlowLayout());
        c.add(new JLabel("Expense Calculator"));
        JButton expense = new JButton("Add Expense");
        JButton deposit = new JButton("Add Deposit");
@@ -38,7 +38,7 @@ public class GUI extends JFrame {
        panel.add(deposit);
        panel.add(backButton);
        panel.add(saveButton);
-       c.add(panel, BorderLayout.SOUTH);
+       c.add(panel);
        JTextArea amount = new JTextArea("Hier schreiben Sie das Amount");
        JTextArea description = new JTextArea("Place holder");
        JTextField date = new JTextField();
@@ -47,12 +47,12 @@ public class GUI extends JFrame {
        JSpinner spinner = new JSpinner(new SpinnerDateModel());
        spinner.setEditor(new JSpinner.DateEditor(spinner, model.toPattern()));
 
-       JList[] list = {new JList(Data.toStringArray())};
+       JTextArea[] list = {new JTextArea(Data.toStringList())};
        list[0].setVisible(true);
        scrollPane = new JScrollPane(list[0]);
        scrollPane.setLayout(new ScrollPaneLayout());
        list[0].setLayout(new FlowLayout());
-       c.add(list[0], BorderLayout.EAST);
+       c.add(list[0]);
         JButton connectButton = new JButton("Connect");
         panel.add(connectButton);
        backButton.setVisible(false);
@@ -65,14 +65,15 @@ public class GUI extends JFrame {
        spinner.setVisible(false);
        panel2.setLayout(new FlowLayout());
        panel2.setVisible(true);
-       c.add(panel2, BorderLayout.NORTH);
+       c.add(panel2);
        panel2.add(amount);
        panel2.add(description);
        c.add(date);
        expense.setVisible(false);
        deposit.setVisible(false);
-       final JLabel[] j = {new JLabel(Data.getPercentage())};
-       c.add(j[0], BorderLayout.CENTER);
+       final JTextArea[] j = {new JTextArea(Data.getPercentage())};
+       j[0].setEditable(false);
+       c.add(j[0]);
        connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,6 +93,8 @@ public class GUI extends JFrame {
                 connectButton.setVisible(false);
                 expense.setVisible(true);
                 deposit.setVisible(true);
+                validate();
+                repaint();
             }
         });
 
@@ -107,6 +110,7 @@ public class GUI extends JFrame {
                spinner.setVisible(true);
                isDeposit = false;
                validate();
+               repaint();
            }
        });
 
@@ -123,6 +127,7 @@ public class GUI extends JFrame {
                spinner.setVisible(true);
                isDeposit = true;
                validate();
+               repaint();
            }
        });
        saveButton.addActionListener(new ActionListener() {
@@ -134,17 +139,17 @@ public class GUI extends JFrame {
                SimpleDateFormat model = new SimpleDateFormat("MM/dd/yyyy");
                dateInput[0] = new Date(model.format(spinner.getValue()));
                Data data = new Data(amountInput[0], descriptionInput[0], dateInput[0], isDeposit);
+                c.remove(list[0]);
+               list[0] = new JTextArea(Data.toStringList());
+               list[0].setEditable(false);
 
-               list[0] = new JList(Data.toStringArray());
-
-               //list[0].setVisible(true);
-               list[0].validate();
-               c.add(list[0], BorderLayout.EAST);
-               validate();
+               c.add(list[0]);
                c.remove(j[0]);
-               j[0] = new JLabel(Data.getPercentage());
-               c.add(j[0],BorderLayout.CENTER);
-
+               j[0] = new JTextArea(Data.getPercentage());
+               j[0].setEditable(false);
+               c.add(j[0]);
+               validate();
+               repaint();
            }
 
        }
@@ -160,9 +165,12 @@ public class GUI extends JFrame {
                saveButton.setVisible(false);
                backButton.setVisible(false);
                spinner.setVisible(false);
+               validate();
+               repaint();
            }
        });
        validate();
+       repaint();
 
 
 

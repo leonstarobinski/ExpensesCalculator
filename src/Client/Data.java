@@ -28,16 +28,15 @@ public class Data {
             balance-= amount;
         }
     }
-    public static String[] toStringArray(){
-        String str[] = new String[arrayList.size()];
-
-        for(int i =0; i<str.length; i++){
+    public static String toStringList(){
+        String str = "";
+        for(int i =0; i<arrayList.size(); i++){
             SimpleDateFormat model = new SimpleDateFormat("dd/MM/yyyy");
            if(arrayList.get(i).isDeposit) {
-               str[i] =""+ model.format(arrayList.get(i).date)+"  "+arrayList.get(i).description+"  "+arrayList.get(i).amount+ " D";
+               str +=""+ model.format(arrayList.get(i).date)+"  "+arrayList.get(i).description+"  "+arrayList.get(i).amount+ " D"+"\n";
            }
            else{
-               str[i] =""+ model.format(arrayList.get(i).date)+"  "+arrayList.get(i).description+"  "+arrayList.get(i).amount+ " E";
+               str +=""+ model.format(arrayList.get(i).date)+"  "+arrayList.get(i).description+"  "+arrayList.get(i).amount+ " E"+"\n";
            }
         }
         return str;
